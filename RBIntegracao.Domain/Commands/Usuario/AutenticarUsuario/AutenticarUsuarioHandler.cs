@@ -33,7 +33,6 @@ namespace RBIntegracao.Domain.Commands.Usuario.AutenticarUsuario
 
             if (usuario == null)
             {
-                AddNotification("Usuario", "Usuário não encontrado.");
                 return new AutenticarUsuarioResponse()
                 {
                     Autenticado = false
