@@ -18,8 +18,8 @@ namespace RBIntegracao.Infra.Repositories.Map
             builder.Property(x => x.ClienteOuFornecedor).IsRequired();
 
             builder.OwnsOne<Nome>(x => x.Nome, cb => {
-                cb.Property(x => x.RazaoSocial).HasMaxLength(500).IsRequired();
-                cb.Property(x => x.NomeFantasia).HasMaxLength(500).IsRequired();
+                cb.Property(x => x.RazaoSocial).HasMaxLength(500).IsRequired().HasColumnName("RazaoSocial");
+                cb.Property(x => x.NomeFantasia).HasMaxLength(500).IsRequired().HasColumnName("NomeFantasia"); 
             });
 
             builder.OwnsOne<Email>(x => x.Email, cb => {
