@@ -25,17 +25,13 @@ namespace RBIntegracao.Domain.Services
 
         public AdicionarSolicitacaoResponse AdicionarSolicitacao(AdicionarSolicitacaoRequest request, Guid idUsuario)
         {
-            if (request == null)
-            {
-                AddNotification("AdicionarUsuarioRequest", "Invalido");
-                return null;
-            }
 
             if (request == null)
             {
                 AddNotification("Resquest", "Invalido");
                 return null;
             }
+
 
             if (request.CnpjFornecedor == null)
             {
@@ -44,6 +40,12 @@ namespace RBIntegracao.Domain.Services
             }
 
             var cliente = _repositoryUsuario.ObterPorId(idUsuario);
+
+            if (cliente.ClienteOuFornecedor != 0)
+            {
+                AddNotification("Usuario", "O mesmo tem que esta cadastrado como cliente, para realizar uma solicitação");
+                return null;
+            }
 
             if (cliente.ClienteOuFornecedor == 0)
             {
