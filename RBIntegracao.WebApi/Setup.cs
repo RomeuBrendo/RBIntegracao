@@ -9,6 +9,8 @@ using RBIntegracao.Api.Security;
 using RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao;
 using RBIntegracao.Domain.Commands.Usuario.AdicionarUsuario;
 using RBIntegracao.Domain.Interfaces.Repositories;
+using RBIntegracao.Domain.Interfaces.Services;
+using RBIntegracao.Domain.Services;
 using RBIntegracao.Infra;
 using RBIntegracao.Infra.Repositories;
 using RBIntegracao.Infra.Repositories.Base;
@@ -125,9 +127,11 @@ namespace RBIntegracao.WebApi
             services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
             services.AddTransient<IRepositorySolicitacao, RepositorySolicitacao>();
             services.AddTransient<IRepositoryGrupoFornecedor, RepositoryGrupoFornecedor>();
-           // services.AddTransient<IRepositoryPedido, RepositoryPedido>();
+            // services.AddTransient<IRepositoryPedido, RepositoryPedido>();
 
-   
+            //Services
+            services.AddTransient<IServiceUsuario, ServiceUsuario>();
+
         }
 
         public static void ConfigureSwagger(this IServiceCollection services)

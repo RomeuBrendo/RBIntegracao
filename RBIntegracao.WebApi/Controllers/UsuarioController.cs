@@ -1,11 +1,11 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using RBIntegracao.Api.Security;
 using RBIntegracao.Domain.Commands.Usuario.AdicionarUsuario;
 using RBIntegracao.Domain.Commands.Usuario.AutenticarUsuario;
+using RBIntegracao.Domain.Interfaces.Services;
 using RBIntegracao.Infra.Repositories.Transactions;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -18,11 +18,11 @@ namespace RBIntegracao.WebApi.Controllers
 {
     public class UsuarioController : Base.ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IServiceUsuario _serviceUsuario;
 
-        public UsuarioController(IMediator mediator, IUnitOfWork unitOfWork) : base(unitOfWork)
+        public UsuarioController(IUnitOfWork unitOfWork, IServiceUsuario serviceUsuario) : base(unitOfWork)
         {
-            _mediator = mediator;
+            _serviceUsuario = serviceUsuario;
         }
 
         [AllowAnonymous]
@@ -32,13 +32,12 @@ namespace RBIntegracao.WebApi.Controllers
         {
             try
             {
-                var response = await _mediator.Send(request, CancellationToken.None);
-                return await ResponseAsync(response);
+                var response = _serviceUsuario.AdicionarUsuario(request);
+                return await ResponseAsync(response, _serviceUsuario);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-
-                return BadRequest(ex.Message);
+                return await ResponseExceptionAsync(ex);
             }
 
         }
@@ -46,35 +45,18 @@ namespace RBIntegracao.WebApi.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("api/Usuario/Autenticar")]
-        public async Task<IActionResult> Autenticar(
+        public object Autenticar(
             [FromBody]AutenticarUsuarioResquest request,
             [FromServices]SigningConfigurations signingConfigurations,
             [FromServices]TokenConfigurations tokenConfigurations)
         {
 
-            try
-            {
-                var autenticarUsuarioResponse = await _mediator.Send(request, CancellationToken.None);
+            bool credenciaisValidas = false;
+            AutenticarUsuarioResponse response = _serviceUsuario.AutenticarUsuario(request);
 
-                if (autenticarUsuarioResponse.Autenticado == true)
-                {
-                    var response = GerarToken(autenticarUsuarioResponse, signingConfigurations, tokenConfigurations);
+            credenciaisValidas = response != null;
 
-                    return Ok(response);
-                }
-
-                return Ok(autenticarUsuarioResponse);
-
-            }
-            catch (System.Exception ex)
-            {
-
-                return NotFound(ex.Message);
-            }
-        }
-        private object GerarToken(AutenticarUsuarioResponse response, SigningConfigurations signingConfigurations, TokenConfigurations tokenConfigurations)
-        {
-            if (response.Autenticado == true)
+            if (credenciaisValidas)
             {
                 ClaimsIdentity identity = new ClaimsIdentity(
                     new GenericIdentity(response.Id.ToString(), "Id"),
@@ -86,7 +68,8 @@ namespace RBIntegracao.WebApi.Controllers
                 );
 
                 DateTime dataCriacao = DateTime.Now;
-                DateTime dataExpiracao = dataCriacao + TimeSpan.FromSeconds(tokenConfigurations.Seconds);
+                DateTime dataExpiracao = dataCriacao +
+                    TimeSpan.FromSeconds(tokenConfigurations.Seconds);
 
                 var handler = new JwtSecurityTokenHandler();
                 var securityToken = handler.CreateToken(new SecurityTokenDescriptor
@@ -107,13 +90,16 @@ namespace RBIntegracao.WebApi.Controllers
                     expiration = dataExpiracao.ToString("yyyy-MM-dd HH:mm:ss"),
                     accessToken = token,
                     message = "OK",
-                    Id = response.Id,
                     RazaoSocial = response.Nome
                 };
             }
             else
             {
-                return response;
+                return new
+                {
+                    authenticated = false,
+                    _serviceUsuario.Notifications
+                };
             }
         }
     }

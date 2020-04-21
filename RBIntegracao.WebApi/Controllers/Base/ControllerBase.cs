@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using RBIntegracao.Domain.Commands;
+using RBIntegracao.Domain.Interfaces.Services.Base;
 using RBIntegracao.Infra.Repositories.Transactions;
 using System;
 using System.Linq;
@@ -12,21 +13,25 @@ namespace RBIntegracao.WebApi.Controllers.Base
     public class ControllerBase : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private IServiceBase _serviceBase;
 
         public ControllerBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> ResponseAsync(Response response)
+        public async Task<IActionResult> ResponseAsync(object result, IServiceBase serviceBase)
         {
-            if (!response.Notifications.Any())
+            _serviceBase = serviceBase;
+
+            if (!serviceBase.Notifications.Any())
             {
                 try
                 {
                     _unitOfWork.SaveChanges();
 
-                    return Ok(response);
+                    return Ok(result);
+                    //return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
                 catch (Exception ex)
                 {
@@ -37,7 +42,8 @@ namespace RBIntegracao.WebApi.Controllers.Base
             }
             else
             {
-                return Ok(response);
+                return BadRequest(new { errors = serviceBase.Notifications });
+                //return Request.CreateResponse(HttpStatusCode.BadRequest, new { errors = serviceBase.Notifications });
             }
         }
 
