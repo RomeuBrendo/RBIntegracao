@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao
 {
-    public class AdicionarSolicitacaoRequest : IRequest<Response>
+    public class AdicionarSolicitacaoRequest 
     {
 
         public Guid ? IdUsuario { get; set; }

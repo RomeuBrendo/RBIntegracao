@@ -1,46 +1,56 @@
-﻿using MediatR;
-using prmToolkit.NotificationPattern;
+﻿using prmToolkit.NotificationPattern;
+using RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao;
+using RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao;
 using RBIntegracao.Domain.Entities;
 using RBIntegracao.Domain.Interfaces.Repositories;
+using RBIntegracao.Domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao
+namespace RBIntegracao.Domain.Services
 {
-    public class AdicionarSolicitacaoHandler : Notifiable, IRequestHandler<AdicionarSolicitacaoRequest, Response>
+    public class ServiceSolicitacao : Notifiable, IServiceSolicitacao
     {
-        private readonly IMediator _mediator;
         private readonly IRepositorySolicitacao _repositorySolicitacao;
         private readonly IRepositoryGrupoFornecedor _repositoryGrupoFornecedor;
         private readonly IRepositoryUsuario _repositoryUsuario;
 
-        public AdicionarSolicitacaoHandler(IMediator mediator, IRepositorySolicitacao repositorySolicitacao, IRepositoryGrupoFornecedor repositoryGrupoFornecedor, IRepositoryUsuario repositoryFornecedor)
+        public ServiceSolicitacao(IRepositorySolicitacao repositorySolicitacao, IRepositoryGrupoFornecedor repositoryGrupoFornecedor, IRepositoryUsuario repositoryUsuario)
         {
-            _mediator = mediator;
             _repositorySolicitacao = repositorySolicitacao;
             _repositoryGrupoFornecedor = repositoryGrupoFornecedor;
-            _repositoryUsuario = repositoryFornecedor;
+            _repositoryUsuario = repositoryUsuario;
         }
 
-        public async Task<Response> Handle(AdicionarSolicitacaoRequest request, CancellationToken cancellationToken)
+        public AdicionarSolicitacaoResponse AdicionarSolicitacao(AdicionarSolicitacaoRequest request, Guid idUsuario)
         {
             if (request == null)
             {
+                AddNotification("AdicionarUsuarioRequest", "Invalido");
+                return null;
+            }
+
+            if (request == null)
+            {
                 AddNotification("Resquest", "Invalido");
-                return new Response(this);
+                return null;
             }
 
             if (request.CnpjFornecedor == null)
             {
                 AddNotification("Fornecedor", "Invalido");
-                return new Response(this);
+                return null;
             }
-            
-            var cliente = _repositoryUsuario.ObterPorId(request.IdUsuario.Value);
+
+            var cliente = _repositoryUsuario.ObterPorId(idUsuario);
+
+            if (cliente.ClienteOuFornecedor == 0)
+            {
+                AddNotification("CnpjFornecedor", "O mesmo tem que esta cadastrado como fornecedor");
+                return null;
+            }
+
             var solicitacao = new Entities.Solicitacao(cliente, request.CodigoProduto, request.Descricao,
                                                        request.PrevisaoTerminoEstoque, request.QuantidadeSolicitada,
                                                        request.Observacao);
@@ -56,7 +66,7 @@ namespace RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao
                 var fornecedor = _repositoryUsuario.ObterPor(x => x.CnpjCpf.Equals(item));
 
                 if (fornecedor != null)
-                  grupoFornecedor.Add(new Entities.GrupoFornecedor(fornecedor, solicitacao));        
+                    grupoFornecedor.Add(new Entities.GrupoFornecedor(fornecedor, solicitacao));
             }
 
             AddNotifications(grupoFornecedor);
@@ -68,21 +78,21 @@ namespace RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao
             else
             {
                 AddNotification("Fornecedor", "É necessário informar Fornecedor já cadastrado");
-                return new Response(this);
+                return null;
             }
-           
 
-            
-
-            var response = new Response(this, solicitacao);
 
             // AdicionarUsuarioNotification adicionarUsuarioNotification = new AdicionarUsuarioNotification(usuario);
 
             // await _mediator.Publish(adicionarUsuarioNotification);
 
-            return await Task.FromResult(response);
+            return new AdicionarSolicitacaoResponse(solicitacao.Id);
+
         }
 
-        
+        public ListarSolicitacaoResponse ListarSolicitacaoFornecedor(ListarSolicitacaoRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

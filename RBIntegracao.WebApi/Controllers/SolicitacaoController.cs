@@ -10,19 +10,22 @@ using RBIntegracao.Domain.Commands.Usuario.AutenticarUsuario;
 using RBIntegracao.Infra.Repositories.Transactions;
 using RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao;
 using RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao;
+using RBIntegracao.Domain.Interfaces.Services;
 
 namespace RBIntegracao.WebApi.Controllers
 {
     public class SolicitacaoController : Base.ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IServiceSolicitacao _serviceSolicitacao;
+
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public SolicitacaoController(IHttpContextAccessor httpContextAccessor, IMediator mediator, IUnitOfWork unitOfWork) : base(unitOfWork)
+        public SolicitacaoController(IHttpContextAccessor httpContextAccessor, IUnitOfWork unityOfWork, IServiceSolicitacao serviceSolicitacao) : base(unityOfWork)
         {
-            _mediator = mediator;
+            _serviceSolicitacao = serviceSolicitacao;
             _httpContextAccessor = httpContextAccessor;
         }
+
 
         [Authorize]
         [HttpPost]
@@ -34,10 +37,9 @@ namespace RBIntegracao.WebApi.Controllers
                 string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
                 AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuarioClaims);
 
-                request.IdUsuario = usuarioResponse.Id;
+                var response = _serviceSolicitacao.AdicionarSolicitacao(request, usuarioResponse.Id);
 
-                var response = await _mediator.Send(request, CancellationToken.None);
-                return await ResponseAsync(response);
+                return await ResponseAsync(response, _serviceSolicitacao);
             }
             catch (System.Exception ex)
             {
@@ -48,29 +50,29 @@ namespace RBIntegracao.WebApi.Controllers
         }
 
 
-        [Authorize]
-        [HttpPost]
-        [Route("api/Solicitacao/ListarPorFornecedor")]
-        public async Task<IActionResult> ListarSolicitacao()
-        {
-            try
-            {
-                var request = new ListarSolicitacaoRequest();
+        //[Authorize]
+        //[HttpPost]
+        //[Route("api/Solicitacao/ListarPorFornecedor")]
+        //public async Task<IActionResult> ListarSolicitacao()
+        //{
+        //    try
+        //    {
+        //        var request = new ListarSolicitacaoRequest();
 
-                string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
-                AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuarioClaims);
+        //        string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
+        //        AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuarioClaims);
 
-                request.Id = usuarioResponse.Id;
-                var response = await _mediator.Send(request, CancellationToken.None);
+        //        request.Id = usuarioResponse.Id;
+        //        var response = await _mediator.Send(request, CancellationToken.None);
 
-                return Ok(response);
-            }
-            catch (System.Exception ex)
-            {
+        //        return Ok(response);
+        //    }
+        //    catch (System.Exception ex)
+        //    {
 
-                return BadRequest(ex.Message);
-            }
+        //        return BadRequest(ex.Message);
+        //    }
 
-        }
+        //}
     }
 }

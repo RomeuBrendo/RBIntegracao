@@ -131,6 +131,7 @@ namespace RBIntegracao.WebApi
 
             //Services
             services.AddTransient<IServiceUsuario, ServiceUsuario>();
+            services.AddTransient<IServiceSolicitacao, ServiceSolicitacao>();
 
         }
 
