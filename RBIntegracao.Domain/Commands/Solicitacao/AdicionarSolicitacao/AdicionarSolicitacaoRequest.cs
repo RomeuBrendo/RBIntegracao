@@ -10,6 +10,8 @@ namespace RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao
     {
 
         public Guid ? IdUsuario { get; set; }
+
+        public int IdExternoSolicitacao { get; set; }
         public int CodigoProduto { get; set; }
 
         public string Descricao { get; set; }

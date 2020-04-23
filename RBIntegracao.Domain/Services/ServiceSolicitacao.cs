@@ -48,7 +48,7 @@ namespace RBIntegracao.Domain.Services
                 return null;
             }
 
-            var solicitacao = new Entities.Solicitacao(cliente, request.CodigoProduto, request.Descricao,
+            var solicitacao = new Entities.Solicitacao(cliente, request.IdExternoSolicitacao, request.CodigoProduto, request.Descricao,
                                                        request.PrevisaoTerminoEstoque, request.QuantidadeSolicitada,
                                                        request.Observacao);
 
@@ -89,7 +89,7 @@ namespace RBIntegracao.Domain.Services
 
             // await _mediator.Publish(adicionarUsuarioNotification);
 
-            return new AdicionarSolicitacaoResponse(solicitacao.Id);
+            return new AdicionarSolicitacaoResponse(solicitacao.Id, request.IdExternoSolicitacao);
 
         }
         public IEnumerable<ListarSolicitacaoResponse> ListarSolicitacaoFornecedor(Guid IdUsuario)

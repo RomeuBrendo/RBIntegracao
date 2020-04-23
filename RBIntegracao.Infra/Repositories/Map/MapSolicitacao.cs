@@ -12,7 +12,8 @@ namespace RBIntegracao.Infra.Repositories.Map
 
             ////Propriedades
             builder.HasKey(x => x.Id);
-           
+
+            builder.Property(x => x.IdExternoSolicitacao).IsRequired();
             builder.Property(x => x.CodigoProduto).IsRequired();
             builder.Property(x => x.Descricao).IsRequired().HasMaxLength(500);
             builder.Property(x => x.PrevisaoTermino).IsRequired();

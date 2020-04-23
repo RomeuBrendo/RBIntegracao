@@ -13,8 +13,9 @@ namespace RBIntegracao.Domain.Entities
         {
 
         }
-        public Solicitacao(Usuario empresaSolicitante, int codigoProduto, string descricao, DateTime? previsaoTermino, double quantidadeSolicitada, string observacao)
+        public Solicitacao(Usuario empresaSolicitante, int idExternoSolicitacao, int codigoProduto, string descricao, DateTime? previsaoTermino, double quantidadeSolicitada, string observacao)
         {
+            idExternoSolicitacao = IdExternoSolicitacao;
             EmpresaSolicitante = empresaSolicitante;
             CodigoProduto = codigoProduto;
             Descricao = descricao;
@@ -32,6 +33,8 @@ namespace RBIntegracao.Domain.Entities
         }
 
         public Usuario EmpresaSolicitante { get; private set; }
+
+        public int IdExternoSolicitacao { get; private set; }
         public int CodigoProduto { get; private set; }
 
         public string Descricao { get; private set; }
@@ -53,6 +56,9 @@ namespace RBIntegracao.Domain.Entities
 
             if (this.QuantidadeSolicitada <= 0)
                 AddNotification("Quantidade Solicitada", "Inválida");
+            
+            if (this.IdExternoSolicitacao <= 0)
+                AddNotification("IdExternoSolicitacao", "Inválido");
         }
 
     }
