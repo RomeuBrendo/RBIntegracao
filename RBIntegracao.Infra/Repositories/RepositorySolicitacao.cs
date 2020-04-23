@@ -20,17 +20,17 @@ namespace RBIntegracao.Infra.Repositories
             _context = context;
         }
 
-        public IQueryable<Solicitacao> ListarSolicitacaoFornecedor(Guid idFornecedor)
+        public IEnumerable<Solicitacao> ListarSolicitacaoFornecedor(Guid idFornecedor)
         {
-            IQueryable<Solicitacao> query = _context.Set<Solicitacao>();
+       
 
-            query = from f in _context.GrupoFornecedor
+            IEnumerable<Solicitacao> solicitacoes = (from f in _context.GrupoFornecedor
                                     from s in _context.Solicitacao
                                     where f.Fornecedor.Id == idFornecedor &&
                                     s.Id == f.Solicitacao.Id
-                                    select s;
-
-            return query;
+                                    select s).Include(c => c.EmpresaSolicitante).ToList();
+            
+            return solicitacoes;
         }
     }
 }

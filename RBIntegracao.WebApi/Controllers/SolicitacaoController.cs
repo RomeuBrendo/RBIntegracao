@@ -50,29 +50,28 @@ namespace RBIntegracao.WebApi.Controllers
         }
 
 
-        //[Authorize]
-        //[HttpPost]
-        //[Route("api/Solicitacao/ListarPorFornecedor")]
-        //public async Task<IActionResult> ListarSolicitacao()
-        //{
-        //    try
-        //    {
-        //        var request = new ListarSolicitacaoRequest();
+        [Authorize]
+        [HttpPost]
+        [Route("api/Solicitacao/ListarPorFornecedor")]
+        public async Task<IActionResult> ListarSolicitacao()
+        {
+            try
+            {
+                var request = new ListarSolicitacaoRequest();
 
-        //        string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
-        //        AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuarioClaims);
+                string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
+                AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuarioClaims);
 
-        //        request.Id = usuarioResponse.Id;
-        //        var response = await _mediator.Send(request, CancellationToken.None);
+                var response = _serviceSolicitacao.ListarSolicitacaoFornecedor(usuarioResponse.Id);
 
-        //        return Ok(response);
-        //    }
-        //    catch (System.Exception ex)
-        //    {
+                return await ResponseAsync(response, _serviceSolicitacao);
+            }
+            catch (System.Exception ex)
+            {
 
-        //        return BadRequest(ex.Message);
-        //    }
+                return await ResponseExceptionAsync(ex);
+            }
 
-        //}
+        }
     }
 }

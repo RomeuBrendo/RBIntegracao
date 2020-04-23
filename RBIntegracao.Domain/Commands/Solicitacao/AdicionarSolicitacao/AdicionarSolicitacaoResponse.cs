@@ -8,8 +8,6 @@ namespace RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao
         {
             Id = id;
         }
-
         public Guid Id { get; set; }
-        public string Mensagem { get; set; }
     }
 }

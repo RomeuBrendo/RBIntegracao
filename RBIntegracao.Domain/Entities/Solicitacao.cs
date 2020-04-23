@@ -31,7 +31,7 @@ namespace RBIntegracao.Domain.Entities
             DataSolicitacao = DateTime.Now;
         }
 
-        public Usuario EmpresaSolicitante { get; set; }
+        public Usuario EmpresaSolicitante { get; private set; }
         public int CodigoProduto { get; private set; }
 
         public string Descricao { get; private set; }
