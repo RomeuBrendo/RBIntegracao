@@ -1,26 +1,24 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using RBIntegracao.Domain.Commands.Usuario.AutenticarUsuario;
-using RBIntegracao.Infra.Repositories.Transactions;
 using RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao;
 using RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao;
+using RBIntegracao.Domain.Commands.Usuario.AutenticarUsuario;
 using RBIntegracao.Domain.Interfaces.Services;
+using RBIntegracao.Infra.Repositories.Transactions;
+using System.Threading.Tasks;
 
-namespace RBIntegracao.WebApi.Controllers
+
+namespace RBIntegracao.WebApi.Controllers.Cliente
 {
-    public class SolicitacaoController : Base.ControllerBase
+    public class Solicitacao : Base.ControllerBase
     {
         private readonly IServiceSolicitacao _serviceSolicitacao;
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public SolicitacaoController(IHttpContextAccessor httpContextAccessor, IUnitOfWork unityOfWork, IServiceSolicitacao serviceSolicitacao) : base(unityOfWork)
+        public Solicitacao(IHttpContextAccessor httpContextAccessor, IUnitOfWork unityOfWork, IServiceSolicitacao serviceSolicitacao) : base(unityOfWork)
         {
             _serviceSolicitacao = serviceSolicitacao;
             _httpContextAccessor = httpContextAccessor;
@@ -29,7 +27,7 @@ namespace RBIntegracao.WebApi.Controllers
 
         [Authorize]
         [HttpPost]
-        [Route("api/Solicitacao/Adicionar")]
+        [Route("api/Cliente/Solicitacao/Adicionar")]
         public async Task<IActionResult> AdicionarSolicitacao([FromBody]AdicionarSolicitacaoRequest request)
         {
             try
@@ -49,10 +47,9 @@ namespace RBIntegracao.WebApi.Controllers
 
         }
 
-
         [Authorize]
         [HttpPost]
-        [Route("api/Solicitacao/ListarPorFornecedor")]
+        [Route("api/Cliente/Solicitacao/Listar")]
         public async Task<IActionResult> ListarSolicitacao()
         {
             try

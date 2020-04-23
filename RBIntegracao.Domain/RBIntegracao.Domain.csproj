@@ -17,6 +17,7 @@
 	  <Folder Include="Commands\Pedido\AdicionarPedido\" />
 	  <Folder Include="Commands\Usuario\AdicionarUsuario\Notifications\" />
 	  <Folder Include="Commands\Usuario\AutenticarUsuario\" />
+	  <Folder Include="Services\Fornecedor\" />
 	</ItemGroup>
 
 </Project>

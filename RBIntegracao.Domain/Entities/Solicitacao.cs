@@ -15,7 +15,7 @@ namespace RBIntegracao.Domain.Entities
         }
         public Solicitacao(Usuario empresaSolicitante, int idExternoSolicitacao, int codigoProduto, string descricao, DateTime? previsaoTermino, double quantidadeSolicitada, string observacao)
         {
-            idExternoSolicitacao = IdExternoSolicitacao;
+            IdExternoSolicitacao = idExternoSolicitacao;
             EmpresaSolicitante = empresaSolicitante;
             CodigoProduto = codigoProduto;
             Descricao = descricao;

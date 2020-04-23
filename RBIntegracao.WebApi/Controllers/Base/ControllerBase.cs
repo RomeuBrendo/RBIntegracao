@@ -1,7 +1,6 @@
 ﻿
 
 using Microsoft.AspNetCore.Mvc;
-using RBIntegracao.Domain.Commands;
 using RBIntegracao.Domain.Interfaces.Services.Base;
 using RBIntegracao.Infra.Repositories.Transactions;
 using System;
