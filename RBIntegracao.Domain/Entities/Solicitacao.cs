@@ -29,7 +29,26 @@ namespace RBIntegracao.Domain.Entities
 
             ValidaNumerais();
 
-            DataSolicitacao = DateTime.Now;
+            DataSolicitacao = DateTime.Today;
+        }
+
+        public Solicitacao(Guid id, string dataInicio, string dataFim)
+        {
+            try
+            {
+                Id = id;
+                DataInicio = Convert.ToDateTime(dataInicio);
+                DataFim = Convert.ToDateTime(dataFim);
+            }
+            catch (Exception)
+            {
+
+                AddNotification("Data ", "Verifique Data Inicio e Data Fim.");
+            }
+
+            if((this.DataInicio) > (this.DataFim))
+                AddNotification("Data ", "Data inicio não pode ser superior a data fim.");
+
         }
 
         public Usuario EmpresaSolicitante { get; private set; }
@@ -48,6 +67,10 @@ namespace RBIntegracao.Domain.Entities
         public string Observacao { get; private set; }
 
         public DateTime? DataSolicitacao { get; private set; }
+
+        //Propriedade apenas para validar data da listagem
+        public DateTime DataInicio { get; private set; }
+        public DateTime DataFim { get; private set; }
 
         private void ValidaNumerais()
         {

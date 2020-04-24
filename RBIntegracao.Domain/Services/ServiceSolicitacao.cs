@@ -62,6 +62,12 @@ namespace RBIntegracao.Domain.Services
             {
                 var fornecedor = _repositoryUsuario.ObterPor(x => x.CnpjCpf.Equals(item));
 
+                if (fornecedor == null)
+                {
+                    AddNotification("Fornecedor", "Não encontrado");
+                    return null;
+                }
+
                 if (fornecedor.ClienteOuFornecedor == Enums.EnumClienteOuFornecedor.Cliente) 
                 {
                     AddNotification("cnpjFornecedor", "O mesmo tem que esta cadastrado como Fornedor, para realizar uma solicitação");
@@ -73,6 +79,8 @@ namespace RBIntegracao.Domain.Services
             }
 
             AddNotifications(grupoFornecedor);
+
+            if (IsInvalid()) return null;
 
             if (grupoFornecedor.Count > 0)
             {
@@ -99,6 +107,30 @@ namespace RBIntegracao.Domain.Services
 
             var response = solicitacaoCollection.ToList().Select(entidade => (ListarSolicitacaoResponse)entidade);
            
+            return response;
+        }
+
+        public IEnumerable<ListarSolicitacaoResponse> ListarSolicitacaoCliente(ListarSolicitacaoRequest request)
+        {
+            if (request == null)
+            {
+                AddNotification("Resquest", "Invalido");
+                return null;
+            }
+      
+            var filtroSolicitacao = new Solicitacao(request.Id.Value, request.DataInicio, request.DataFim);
+
+            AddNotifications(filtroSolicitacao);
+
+            if (IsInvalid()) return null;
+
+            var solicitacaoCollection = _repositorySolicitacao.ListarPor(x => x.EmpresaSolicitante.Id == filtroSolicitacao.Id &&
+                                                                        x.DataSolicitacao >= filtroSolicitacao.DataInicio &&
+                                                                        x.DataSolicitacao <= filtroSolicitacao.DataFim, c => c.EmpresaSolicitante);
+                                                                        
+
+            var response = solicitacaoCollection.ToList().Select(entidade => (ListarSolicitacaoResponse)entidade);
+
             return response;
         }
     }

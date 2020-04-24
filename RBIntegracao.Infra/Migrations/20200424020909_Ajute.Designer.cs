@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RBIntegracao.Infra.Repositories.Base;
 
 namespace RBIntegracao.Infra.Migrations
 {
     [DbContext(typeof(RBIntegracaoContext))]
-    partial class RBIntegracaoContextModelSnapshot : ModelSnapshot
+    [Migration("20200424020909_Ajute")]
+    partial class Ajute
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,8 +65,8 @@ namespace RBIntegracao.Infra.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Observacao")
-                        .HasColumnType("varchar(500) CHARACTER SET utf8mb4")
-                        .HasMaxLength(500);
+                        .HasColumnType("varchar(1500) CHARACTER SET utf8mb4")
+                        .HasMaxLength(1500);
 
                     b.Property<DateTime?>("PrevisaoTermino")
                         .IsRequired()

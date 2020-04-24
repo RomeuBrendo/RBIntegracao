@@ -11,5 +11,6 @@ namespace RBIntegracao.Domain.Interfaces.Services
     {
         AdicionarSolicitacaoResponse AdicionarSolicitacao(AdicionarSolicitacaoRequest request, Guid idUsuario);
         IEnumerable<ListarSolicitacaoResponse> ListarSolicitacaoFornecedor(Guid IdFornecedor);
+        public IEnumerable<ListarSolicitacaoResponse> ListarSolicitacaoCliente(ListarSolicitacaoRequest listarSolicitacaoRequest);
     }
 }

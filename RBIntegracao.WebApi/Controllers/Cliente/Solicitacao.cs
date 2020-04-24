@@ -48,18 +48,17 @@ namespace RBIntegracao.WebApi.Controllers.Cliente
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpGet]
         [Route("api/Cliente/Solicitacao/Listar")]
-        public async Task<IActionResult> ListarSolicitacao()
+        public async Task<IActionResult> ListarSolicitacao(ListarSolicitacaoRequest request)
         {
             try
             {
-                var request = new ListarSolicitacaoRequest();
-
                 string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
                 AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuarioClaims);
+                request.Id = usuarioResponse.Id;
 
-                var response = _serviceSolicitacao.ListarSolicitacaoFornecedor(usuarioResponse.Id);
+                var response = _serviceSolicitacao.ListarSolicitacaoCliente(request);
 
                 return await ResponseAsync(response, _serviceSolicitacao);
             }

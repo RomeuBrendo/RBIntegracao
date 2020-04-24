@@ -23,14 +23,12 @@ namespace RBIntegracao.WebApi.Controllers.Fornecedor
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpGet]
         [Route("api/Fornecedor/Solicitacao/Listar")]
         public async Task<IActionResult> ListarSolicitacao()
         {
             try
             {
-                var request = new ListarSolicitacaoRequest();
-
                 string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
                 AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuarioClaims);
 
