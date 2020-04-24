@@ -13,7 +13,7 @@ namespace RBIntegracao.Domain.Entities
         {
 
         }
-        public Solicitacao(Usuario empresaSolicitante, int idExternoSolicitacao, int codigoProduto, string descricao, DateTime? previsaoTermino, double quantidadeSolicitada, string observacao)
+        public Solicitacao(Usuario empresaSolicitante, int idExternoSolicitacao, int codigoProduto, string descricao, DateTime? previsaoTermino, double quantidadeSolicitada, string observacao, DateTime dataValidade)
         {
             IdExternoSolicitacao = idExternoSolicitacao;
             EmpresaSolicitante = empresaSolicitante;
@@ -23,6 +23,7 @@ namespace RBIntegracao.Domain.Entities
             QuantidadeSolicitada = quantidadeSolicitada;
             Status = EnumStatus.Aberta;
             Observacao = observacao;
+            DataValidade = dataValidade;
 
             new AddNotifications<Solicitacao>(this)
                 .IfNullOrEmpty(x => x.Descricao, "Descrição do produto não pode ser vazia");
@@ -71,6 +72,8 @@ namespace RBIntegracao.Domain.Entities
         //Propriedade apenas para validar data da listagem
         public DateTime DataInicio { get; private set; }
         public DateTime DataFim { get; private set; }
+
+        public DateTime DataValidade { get; private set; }
 
         private void ValidaNumerais()
         {

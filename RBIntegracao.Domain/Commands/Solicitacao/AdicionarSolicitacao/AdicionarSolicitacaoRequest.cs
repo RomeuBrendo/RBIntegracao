@@ -25,5 +25,7 @@ namespace RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao
         public string Observacao { get; set; }
 
         public List<string> CnpjFornecedor { get; set; }
+
+        public DateTime DataValidade { get; set; }
     }
 }

@@ -50,7 +50,7 @@ namespace RBIntegracao.Domain.Services
 
             var solicitacao = new Entities.Solicitacao(cliente, request.IdExternoSolicitacao, request.CodigoProduto, request.Descricao,
                                                        request.PrevisaoTerminoEstoque, request.QuantidadeSolicitada,
-                                                       request.Observacao);
+                                                       request.Observacao, request.DataValidade);
 
             AddNotifications(solicitacao);
 

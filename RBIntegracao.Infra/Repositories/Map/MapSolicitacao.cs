@@ -18,6 +18,9 @@ namespace RBIntegracao.Infra.Repositories.Map
             builder.Property(x => x.Descricao).IsRequired().HasMaxLength(500);
             builder.Property(x => x.PrevisaoTermino).IsRequired();
             builder.Property(x => x.DataSolicitacao).IsRequired();
+            builder.Property(x => x.DataValidade).IsRequired();
+
+
             builder.Property(x => x.Observacao).HasMaxLength(500);
 
             //Apenas p/ validar listagem
