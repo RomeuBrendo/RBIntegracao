@@ -11,7 +11,6 @@ using RBIntegracao.Domain.Commands.Usuario.AdicionarUsuario;
 using RBIntegracao.Domain.Interfaces.Repositories;
 using RBIntegracao.Domain.Interfaces.Services;
 using RBIntegracao.Domain.Services;
-using RBIntegracao.Infra;
 using RBIntegracao.Infra.Repositories;
 using RBIntegracao.Infra.Repositories.Base;
 using RBIntegracao.Infra.Repositories.Transactions;
@@ -112,8 +111,8 @@ namespace RBIntegracao.WebApi
             //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(Pipelines.MeasureTime<,>));
             //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(Pipelines.ValidateCommand<,>));
 
-            services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly, typeof(AdicionarUsuarioRequest).GetTypeInfo().Assembly);
-            services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly, typeof(AdicionarSolicitacaoRequest).GetTypeInfo().Assembly);
+            //services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly, typeof(AdicionarUsuarioRequest).GetTypeInfo().Assembly);
+            //services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly, typeof(AdicionarSolicitacaoRequest).GetTypeInfo().Assembly);
 
 
         }
@@ -127,11 +126,14 @@ namespace RBIntegracao.WebApi
             services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
             services.AddTransient<IRepositorySolicitacao, RepositorySolicitacao>();
             services.AddTransient<IRepositoryGrupoFornecedor, RepositoryGrupoFornecedor>();
-            // services.AddTransient<IRepositoryPedido, RepositoryPedido>();
+
+            services.AddTransient<IRepositoryOrcamento, RepositoryOrcamento>();
+            
 
             //Services
             services.AddTransient<IServiceUsuario, ServiceUsuario>();
             services.AddTransient<IServiceSolicitacao, ServiceSolicitacao>();
+            services.AddTransient<IServiceOrcamento, ServiceOrcamento>();
 
         }
 
