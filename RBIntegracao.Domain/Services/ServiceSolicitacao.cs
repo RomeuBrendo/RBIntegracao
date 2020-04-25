@@ -117,6 +117,12 @@ namespace RBIntegracao.Domain.Services
                 AddNotification("Resquest", "Invalido");
                 return null;
             }
+
+            if (_repositoryUsuario.Existe(x => x.Id == request.Id && x.ClienteOuFornecedor == Enums.EnumClienteOuFornecedor.Fornecedor))
+            {
+                AddNotification("ListarSolicitacaoCliente", "Funcionalidade disponivel apenas p/ Cliente");
+                return null;
+            }
       
             var filtroSolicitacao = new Solicitacao(request.Id.Value, request.DataInicio, request.DataFim);
 
