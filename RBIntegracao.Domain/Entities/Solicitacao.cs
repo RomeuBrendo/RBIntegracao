@@ -30,7 +30,7 @@ namespace RBIntegracao.Domain.Entities
 
             ValidaNumerais();
 
-            DataSolicitacao = DateTime.Today;
+            DataSolicitacao = DateTime.Now;
         }
 
         public Solicitacao(Guid id, string dataInicio, string dataFim)

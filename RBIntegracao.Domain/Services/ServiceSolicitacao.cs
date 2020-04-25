@@ -42,6 +42,13 @@ namespace RBIntegracao.Domain.Services
 
             var cliente = _repositoryUsuario.ObterPorId(idUsuario);
 
+            if (_repositorySolicitacao.Existe(x => x.IdExternoSolicitacao == request.IdExternoSolicitacao && 
+                                                   x.EmpresaSolicitante.Id == idUsuario))
+            {
+                AddNotification("Id Externo", "Já existe uma solicitação desta empresa com este Id");
+                return null;
+            }
+
             if (cliente.ClienteOuFornecedor == Enums.EnumClienteOuFornecedor.Fornecedor)
             {
                 AddNotification("Usuario", "O mesmo tem que esta cadastrado como cliente, para realizar uma solicitação");
