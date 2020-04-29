@@ -1,7 +1,9 @@
 ﻿using prmToolkit.NotificationPattern;
+using RBIntegracao.Domain.Commands.Orcamento;
 using RBIntegracao.Domain.Entities.Base;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace RBIntegracao.Domain.Entities
@@ -14,6 +16,7 @@ namespace RBIntegracao.Domain.Entities
         }
         public OrcamentoItem(string descricao, double quantidade, double valorUnitarioItem, double valorTotalItem)
         {
+           
             Descricao = descricao;
             Quantidade = quantidade;
             ValorUnitarioItem = valorUnitarioItem;
@@ -34,8 +37,14 @@ namespace RBIntegracao.Domain.Entities
         }
 
         public string Descricao { get; private set; }
-        public double Quantidade { get; private set; }
+        public double Quantidade { get;  private set; }
         public double ValorUnitarioItem { get; private set; }
         public double ValorTotalItem { get; private set; }
+
+
+
+        //public Guid IdSolicitacao { get; private set; }
+
+        //public Orcamento Orcamento { get; private set; }
     }
 }

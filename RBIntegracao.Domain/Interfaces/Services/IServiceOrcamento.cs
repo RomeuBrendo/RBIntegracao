@@ -6,6 +6,6 @@ namespace RBIntegracao.Domain.Interfaces.Services
 {
     public interface IServiceOrcamento : IServiceBase
     {
-        AdicionarOrcamentoResponse AdicionarSolicitacao(AdicionarOrcamentoRequest request, Guid idUsuario);
+        AdicionarOrcamentoResponse AdicionarOrcamento(AdicionarOrcamentoRequest request, Guid idUsuario);
     }
 }

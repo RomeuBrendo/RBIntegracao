@@ -19,12 +19,8 @@ namespace RBIntegracao.Infra.Repositories.Map
             builder.Property(x => x.ValorTotalItem);
             builder.Property(x => x.ValorUnitarioItem);
 
+            //builder.HasOne(x => x.Orcamento).WithMany().HasForeignKey("IdOrcamento");
+
         }
     }
 }
-
-
-//public string Descricao { get; private set; }
-//public double Quantidade { get; private set; }
-//public double ValorUnitarioItem { get; private set; }
-//public double ValorTotalItem { get; private set; }

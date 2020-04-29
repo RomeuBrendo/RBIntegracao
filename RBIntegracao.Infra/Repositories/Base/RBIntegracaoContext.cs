@@ -12,7 +12,6 @@ namespace RBIntegracao.Infra.Repositories.Base
         public DbSet<GrupoFornecedor> GrupoFornecedor { get; set; }
         public DbSet<Orcamento> Orcamento { get; set; }
         public DbSet<OrcamentoItem> OrcamentoItem { get; set; }
-        public DbSet<OrcamentoSolicitacao> OrcamentoSolicitacao { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,7 +35,6 @@ namespace RBIntegracao.Infra.Repositories.Base
 
             modelBuilder.ApplyConfiguration(new MapOrcamento());
             modelBuilder.ApplyConfiguration(new MapOrcamentoItem());
-            modelBuilder.ApplyConfiguration(new MapOrcamentoSolicitacao());
 
             base.OnModelCreating(modelBuilder);
         }

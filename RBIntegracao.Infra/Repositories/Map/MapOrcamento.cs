@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RBIntegracao.Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RBIntegracao.Infra.Repositories.Map
 {
@@ -14,15 +12,20 @@ namespace RBIntegracao.Infra.Repositories.Map
             builder.ToTable("Orcamento");
 
             ////Propriedades
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => x.Id).HasName("Id");
 
             builder.Property(x => x.ValorTotal).IsRequired();
             builder.Property(x => x.Frete);
             builder.Property(x => x.FormaPagamento).HasMaxLength(50);
             builder.Property(x => x.Parcelas);
 
-            builder.Ignore(x => x.Itens);
 
+            builder
+                .HasOne(x => x.FornecedorSolicitante)
+                .WithMany()
+                .HasForeignKey("IdUsuario");
+
+            
 
         }
     }
