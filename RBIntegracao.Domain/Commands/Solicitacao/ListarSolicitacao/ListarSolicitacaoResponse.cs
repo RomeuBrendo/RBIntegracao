@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RBIntegracao.Domain.Commands.Orcamento;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,8 @@ namespace RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao
 
         public DateTime DataValidadeSolicitacao { get; private set; }
 
+        public List<OrcamentoResponse> OrcamentoJaRecebido { get; set; }
+
         public static explicit operator ListarSolicitacaoResponse(Entities.Solicitacao entidade)
         {
             return new ListarSolicitacaoResponse()
@@ -41,7 +44,7 @@ namespace RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao
                 Status = entidade.Status.ToString(),
                 Observacao = entidade.Observacao,
                 DataSolicitacao = entidade.DataSolicitacao,
-                DataValidadeSolicitacao = entidade.DataValidade
+                DataValidadeSolicitacao = entidade.DataValidade,
 
             };
         }
