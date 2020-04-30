@@ -23,6 +23,7 @@ namespace RBIntegracao.Domain.Entities
             FormaPagamento = formaPagamento;
             Parcelas = parcelas;
             Itens = itens;
+            DataOrcamento = DateTime.Now;
 
             ValidaDados();
         }
