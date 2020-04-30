@@ -1,14 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using RBIntegracao.Domain.Entities;
 using RBIntegracao.Domain.Interfaces.Repositories;
-using RBIntegracao.Infra.Repositories;
 using RBIntegracao.Infra.Repositories.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 
 namespace RBIntegracao.Infra.Repositories
 {

@@ -42,7 +42,6 @@ namespace RBIntegracao.Domain.Services
                 return null;
             }
 
-
             var fornecedor = _repositoryUsuario.ObterPorId(idUsuario);
 
             if (_repositoryOrcamento.Existe(x => x.IdExterno == request.IdExterno &&
@@ -57,6 +56,16 @@ namespace RBIntegracao.Domain.Services
                 AddNotification("Usuario", "O mesmo tem que esta cadastrado como fornecedor, para realizar um Orçamento");
                 return null;
             }
+
+            foreach (var item in request.IdExternoSolicitacao)
+            {
+                if (!_repositoryOrcamento.VerificaIdExternoSolicitacao(fornecedor.Id, item))
+                {
+                    AddNotification("Id Externo Solicitacao", "Certifique se existe está solitação de número: "+item);
+                }
+            }
+
+
 
             var itens = PopulaItemOrcamento(request.Itens);
 

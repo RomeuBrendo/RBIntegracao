@@ -6,5 +6,6 @@ namespace RBIntegracao.Domain.Interfaces.Repositories
 {
     public interface IRepositoryOrcamento : IRepositoryBase<Orcamento, Guid>
     {
+        public bool VerificaIdExternoSolicitacao(Guid IdUsuario, int idExterno);
     }
 }

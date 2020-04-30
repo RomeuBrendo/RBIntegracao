@@ -100,10 +100,6 @@ namespace RBIntegracao.Domain.Services
             }
 
 
-            // AdicionarUsuarioNotification adicionarUsuarioNotification = new AdicionarUsuarioNotification(usuario);
-
-            // await _mediator.Publish(adicionarUsuarioNotification);
-
             return new AdicionarSolicitacaoResponse(solicitacao.Id, request.IdExternoSolicitacao);
 
         }
@@ -146,5 +142,7 @@ namespace RBIntegracao.Domain.Services
 
             return response;
         }
+
+
     }
 }
