@@ -25,6 +25,7 @@ namespace RBIntegracao.Domain.Entities
             Parcelas = parcelas;
             Itens = itens;
             DataOrcamento = DateTime.Now;
+            Status = EnumStatus.Aberta;
 
 
             ValidaDados();
@@ -32,6 +33,7 @@ namespace RBIntegracao.Domain.Entities
 
         public int IdExterno { get; private set; }
         public Usuario FornecedorSolicitante { get ; private set; }
+        public EnumStatus Status { get; private set; }
         public Double ValorTotal { get; private set; }
         public Double Frete { get; private set; }
         public Double Seguro { get; private set; }

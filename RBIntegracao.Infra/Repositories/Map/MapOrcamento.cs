@@ -14,6 +14,8 @@ namespace RBIntegracao.Infra.Repositories.Map
             ////Propriedades
             builder.HasKey(x => x.Id).HasName("Id");
 
+            builder.Property(x => x.Status).IsRequired();
+
             builder.Property(x => x.ValorTotal).IsRequired();
             builder.Property(x => x.Frete);
             builder.Property(x => x.FormaPagamento).HasMaxLength(50);
