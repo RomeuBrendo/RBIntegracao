@@ -1,6 +1,7 @@
 ﻿using prmToolkit.NotificationPattern;
 using RBIntegracao.Domain.Commands.Orcamento;
 using RBIntegracao.Domain.Entities.Base;
+using RBIntegracao.Domain.Enums;
 using System;
 using System.Collections.Generic;
 
@@ -24,6 +25,7 @@ namespace RBIntegracao.Domain.Entities
             Parcelas = parcelas;
             Itens = itens;
             DataOrcamento = DateTime.Now;
+
 
             ValidaDados();
         }
@@ -54,6 +56,9 @@ namespace RBIntegracao.Domain.Entities
 
             if (this.Parcelas < 0)
                 AddNotification("Parcelas", "Inválido");
+
+            if (FornecedorSolicitante.ClienteOuFornecedor == EnumClienteOuFornecedor.Cliente)
+                AddNotification("Usuario", "O mesmo tem que esta cadastrado como fornecedor, para realizar um Orçamento");
 
             new AddNotifications<Orcamento>(this)
                 .IfNullOrInvalidLength(x => x.FormaPagamento, 1, 100, "Deve conter entre 1 e 100 caracteres");

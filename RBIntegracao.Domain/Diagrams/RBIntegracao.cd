@@ -1,38 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="RBIntegracao.Domain.Entities.Base.EntityBase">
-    <Position X="7.25" Y="0.5" Width="1.5" />
+    <Position X="8.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\Base\EntityBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="RBIntegracao.Domain.Entities.Usuario">
-    <Position X="8.5" Y="3" Width="2" />
+    <Position X="9.5" Y="3" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAEAAAAAAAAACAAAgAAAEAAAAEAAAA=</HashCode>
       <FileName>Entities\Usuario.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ClienteOuFornecedor" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="RBIntegracao.Domain.Entities.Solicitacao">
-    <Position X="3.25" Y="3" Width="2" />
+    <Position X="3.25" Y="3" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAUAgABCAAAAAAAAAAAAAAAAAAACAAAAAAAAgA=</HashCode>
+      <HashCode>QAAAAAAUAgABCAAAAAAQBRAAAAAAAAAACACAAAAAAgA=</HashCode>
       <FileName>Entities\Solicitacao.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="RBIntegracao.Domain.Entities.Pedido">
-    <Position X="11.25" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAIAAACAIAAAAAAgAAAAAAAAAIAAAAAA=</HashCode>
-      <FileName>Entities\Pedido.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Solicitacao" />
-    </ShowAsAssociation>
-  </Class>
   <Class Name="RBIntegracao.Domain.Entities.GrupoFornecedor">
-    <Position X="6" Y="3" Width="1.75" />
+    <Position X="6.25" Y="3.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>Entities\GrupoFornecedor.cs</FileName>
@@ -42,5 +35,29 @@
       <Property Name="Solicitacao" />
     </ShowAsAssociation>
   </Class>
+  <Class Name="RBIntegracao.Domain.Entities.Orcamento">
+    <Position X="12.25" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAEKAAAAAAAAAAEgBAAAAAACAAAACAACA=</HashCode>
+      <FileName>Entities\Orcamento.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FornecedorSolicitante" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RBIntegracao.Domain.Entities.OrcamentoItem">
+    <Position X="15" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAEQAEAAAAA=</HashCode>
+      <FileName>Entities\OrcamentoItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="RBIntegracao.Domain.Enums.EnumClienteOuFornecedor" Collapsed="true">
+    <Position X="14.25" Y="1.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAACAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Enums\EnumClienteOuFornecedor.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

@@ -27,6 +27,7 @@ namespace RBIntegracao.Infra.Repositories.Map
             builder.Ignore(x => x.DataInicio);
             builder.Ignore(x => x.DataFim);
 
+            builder.Ignore(x => x.Orcamentos);
 
             builder.HasOne(x => x.EmpresaSolicitante).WithMany().HasForeignKey("IdUsuario");
         }

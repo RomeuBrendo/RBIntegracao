@@ -41,10 +41,5 @@ namespace RBIntegracao.Domain.Entities
         public double ValorUnitarioItem { get; private set; }
         public double ValorTotalItem { get; private set; }
 
-
-
-        //public Guid IdSolicitacao { get; private set; }
-
-        //public Orcamento Orcamento { get; private set; }
     }
 }

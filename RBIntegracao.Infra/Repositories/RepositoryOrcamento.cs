@@ -16,27 +16,47 @@ namespace RBIntegracao.Infra.Repositories
             _context = context;
         }
 
-        public bool VerificaIdExternoSolicitacao(Guid IdUsuario, int idExterno)
+        public Solicitacao VerificaIdExternoSolicitacao(Guid idUsuario, int idExterno)
         {
-            var solicitacao = ( from s in _context.Solicitacao
+
+            try
+            {
+                var solicitacao = ( from s in _context.Solicitacao
                                 from g in _context.GrupoFornecedor
                                 where s.IdExternoSolicitacao == idExterno
-                                where g.Fornecedor.Id == IdUsuario &&
+                                where g.Fornecedor.Id == idUsuario &&
                                 g.Solicitacao.Id == s.Id
-                                select s).ToList();
+                                select s).First();
 
-            if (solicitacao.Count == 0)
-                return false;
+                return solicitacao;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+               
 
-            return true;
+        }
 
+        public Orcamento AdicionarOrcamentoCompleto(Orcamento orcamento, List<Solicitacao> solicitacoes)
+        {
+            var orcamentoNovo = this.Adicionar(orcamento);
+
+            if(orcamentoNovo != null)
+            {
+                foreach (var item in solicitacoes)
+                {
+                    var solicitacaoOrcamento = new SolicitacaoOrcamento();
+                    solicitacaoOrcamento.Orcamento = orcamentoNovo;
+                    solicitacaoOrcamento.Solicitacao = item;
+                    _context.SolicitacaoOrcamento.Add(solicitacaoOrcamento);
+                }
+
+            }
+
+
+            return orcamentoNovo;
         }
     }
 }
-//IEnumerable<Solicitacao> solicitacoes = (from f in _context.GrupoFornecedor
-//                                         from s in _context.Solicitacao
-//                                         where f.Fornecedor.Id == idFornecedor &&
-//                                         s.Id == f.Solicitacao.Id
-//                                         select s).Include(c => c.EmpresaSolicitante).ToList();
-            
-//            return solicitacoes;
+

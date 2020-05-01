@@ -28,46 +28,33 @@ namespace RBIntegracao.Domain.Services
                 AddNotification("Resquest", "Invalido");
                 return null;
             }
-
-
-            if (request.IdExternoSolicitacao == null)
-            {
-                AddNotification("Fornecedor", "Invalido");
-                return null;
-            }
-
-            if (request.Itens == null)
-            {
-                AddNotification("Itens", "Invalido");
-                return null;
-            }
-
             var fornecedor = _repositoryUsuario.ObterPorId(idUsuario);
 
             if (_repositoryOrcamento.Existe(x => x.IdExterno == request.IdExterno &&
-                                                   x.FornecedorSolicitante.Id == idUsuario))
+                                                 x.FornecedorSolicitante.Id == idUsuario))
             {
                 AddNotification("Id Externo", "Já existe um Orçamento desta empresa com este Id");
-                return null;
+               
             }
 
-            if (fornecedor.ClienteOuFornecedor == Enums.EnumClienteOuFornecedor.Cliente)
-            {
-                AddNotification("Usuario", "O mesmo tem que esta cadastrado como fornecedor, para realizar um Orçamento");
-                return null;
-            }
+            List<Solicitacao> solicitacoes = new List<Solicitacao>();
 
             foreach (var item in request.IdExternoSolicitacao)
             {
-                if (!_repositoryOrcamento.VerificaIdExternoSolicitacao(fornecedor.Id, item))
+                var solicitacao = _repositoryOrcamento.VerificaIdExternoSolicitacao(idUsuario, item);
+
+                if(solicitacao != null)
+                    solicitacoes.Add(solicitacao);
+                else
                 {
-                    AddNotification("Id Externo Solicitacao", "Certifique se existe está solitação de número: "+item);
+                    AddNotification("Id Externo Solicitação", "Inválido, confirme se o mesmo existe. Número: "+item);
+                    
                 }
+
             }
 
-
-
-            var itens = PopulaItemOrcamento(request.Itens);
+           
+           var itens = PopulaItemOrcamento(request.Itens);
 
            var orcamento = new Entities.Orcamento(fornecedor, request.IdExterno, request.ValorTotal, request.Frete, request.Seguro, request.FormaPagamento,
                                                    request.Parcelas, itens);
@@ -78,7 +65,7 @@ namespace RBIntegracao.Domain.Services
             if (IsInvalid()) return null;
 
 
-            orcamento = _repositoryOrcamento.Adicionar(orcamento);
+            orcamento = _repositoryOrcamento.AdicionarOrcamentoCompleto(orcamento, solicitacoes);
 
             return new AdicionarOrcamentoResponse(orcamento.Id, request.IdExterno);
 
