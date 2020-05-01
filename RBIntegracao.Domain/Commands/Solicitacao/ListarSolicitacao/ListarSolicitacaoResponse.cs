@@ -8,7 +8,7 @@ namespace RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao
 {
     public class ListarSolicitacaoResponse
     {
-        public Guid IdSolicitacao { get; set; }
+        public int IdExternoSolicitacao { get; set; }
         public String EmpresaSolicitante { get; set; }
         public String EmpresaSolicitanteCNPJCPF { get; set; }
 
@@ -34,7 +34,7 @@ namespace RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao
         {
             return new ListarSolicitacaoResponse()
             {
-                IdSolicitacao = entidade.Id,
+                IdExternoSolicitacao = entidade.IdExternoSolicitacao,
                 EmpresaSolicitanteCNPJCPF = entidade.EmpresaSolicitante.CnpjCpf,
                 EmpresaSolicitante = entidade.EmpresaSolicitante.Nome.RazaoSocial,
                 CodigoProduto = entidade.CodigoProduto,
@@ -45,8 +45,9 @@ namespace RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao
                 Observacao = entidade.Observacao,
                 DataSolicitacao = entidade.DataSolicitacao,
                 DataValidadeSolicitacao = entidade.DataValidade,
+                OrcamentoJaRecebido = entidade.Orcamentos.ToList().Select(entidade => (OrcamentoResponse)entidade).ToList(),
 
-            };
+        };
         }
 
     }

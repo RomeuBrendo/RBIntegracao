@@ -135,11 +135,13 @@ namespace RBIntegracao.Domain.Services
 
             var solicitacaoCollection = _repositorySolicitacao.ListarPor(x => x.EmpresaSolicitante.Id == filtroSolicitacao.Id &&
                                                                         x.DataSolicitacao >= filtroSolicitacao.DataInicio &&
-                                                                        x.DataSolicitacao <= filtroSolicitacao.DataFim, c => c.EmpresaSolicitante);
-                                                                        
+                                                                        x.DataSolicitacao <= filtroSolicitacao.DataFim, c => c.EmpresaSolicitante).ToList();
 
-            var response = solicitacaoCollection.ToList().Select(entidade => (ListarSolicitacaoResponse)entidade);
 
+            var solicitacaoCompleta = _repositorySolicitacao.ListarOrcamentoReferenteSolicitacao(solicitacaoCollection);
+
+            var response = solicitacaoCompleta.ToList().Select(entidade => (ListarSolicitacaoResponse)entidade);
+         
             return response;
         }
 

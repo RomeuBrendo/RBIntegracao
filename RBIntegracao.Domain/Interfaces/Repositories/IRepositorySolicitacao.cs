@@ -10,5 +10,7 @@ namespace RBIntegracao.Domain.Interfaces.Repositories
     {
         public IEnumerable<Solicitacao> ListarSolicitacaoFornecedor(Guid idFornecedor);
 
+        public IEnumerable<Solicitacao> ListarOrcamentoReferenteSolicitacao(List<Solicitacao> solicitacoes);
+
     }
 }
