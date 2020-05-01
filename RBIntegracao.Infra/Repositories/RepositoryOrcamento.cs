@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RBIntegracao.Domain.Entities;
+using RBIntegracao.Domain.Enums;
 using RBIntegracao.Domain.Interfaces.Repositories;
 using RBIntegracao.Infra.Repositories.Base;
 using System;
@@ -56,6 +57,23 @@ namespace RBIntegracao.Infra.Repositories
 
 
             return orcamentoNovo;
+        }
+
+        public Orcamento RetornarOrcamentoIdExternoIdUsuario(int IdExterno, Guid idUsuario)
+        {
+            try
+            {
+                var orcamento = _context.SolicitacaoOrcamento.Where(x => x.Orcamento.IdExterno == IdExterno &&
+                                                         x.Solicitacao.EmpresaSolicitante.Id == idUsuario)
+                                                         .Select(x => x.Orcamento).First();
+                return orcamento;
+            }
+            catch
+            {
+
+                return null; 
+            }
+            
         }
     }
 }

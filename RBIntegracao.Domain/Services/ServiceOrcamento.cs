@@ -89,5 +89,29 @@ namespace RBIntegracao.Domain.Services
 
             return orcamentoItens;
         }
+
+        public AlterarStatusResponse AlterarStatus(AlterarStatusRequest request, Guid idUsuario)
+        {
+            if (request == null)
+            {
+                AddNotification("Resquest", "Invalido");
+                return null;
+            }
+
+            var orcamento = _repositoryOrcamento.RetornarOrcamentoIdExternoIdUsuario(request.IdExterno, idUsuario);
+
+            if (orcamento == null)
+            {
+                AddNotification("IdExterno", "Orçamento não localizado.");
+                return null;
+            }
+
+            orcamento.AlterarStatus(request.NovoStatus);
+
+            orcamento = _repositoryOrcamento.Editar(orcamento);
+
+            return new AlterarStatusResponse(orcamento.IdExterno, "Status alterado com sucesso");
+
+        }
     }
 }

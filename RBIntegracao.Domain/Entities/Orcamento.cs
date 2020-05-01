@@ -31,6 +31,11 @@ namespace RBIntegracao.Domain.Entities
             ValidaDados();
         }
 
+        public void AlterarStatus(EnumStatus status)
+        {
+            Status = status;
+        }
+
         public int IdExterno { get; private set; }
         public Usuario FornecedorSolicitante { get ; private set; }
         public EnumStatus Status { get; private set; }

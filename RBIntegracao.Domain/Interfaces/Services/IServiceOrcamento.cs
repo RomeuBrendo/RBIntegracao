@@ -8,5 +8,6 @@ namespace RBIntegracao.Domain.Interfaces.Services
     public interface IServiceOrcamento : IServiceBase
     {
         AdicionarOrcamentoResponse AdicionarOrcamento(AdicionarOrcamentoRequest request, Guid idFornecedor);
+        AlterarStatusResponse AlterarStatus(AlterarStatusRequest request, Guid idUsuario);
     }
 }
