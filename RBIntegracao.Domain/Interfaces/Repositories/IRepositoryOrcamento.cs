@@ -12,5 +12,9 @@ namespace RBIntegracao.Domain.Interfaces.Repositories
         public Orcamento AdicionarOrcamentoCompleto(Orcamento orcamento, List<Solicitacao> solicitacao);
 
         public Orcamento RetornarOrcamentoIdExternoIdUsuario(int IdExterno, Guid idUsuario);
+
+        public bool DeletarOrcamentoCompleto(int IdExterno, Guid idUsuario);
+
+
     }
 }

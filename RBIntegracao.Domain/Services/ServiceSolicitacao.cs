@@ -134,8 +134,8 @@ namespace RBIntegracao.Domain.Services
             if (IsInvalid()) return null;
 
             var solicitacaoCollection = _repositorySolicitacao.ListarPor(x => x.EmpresaSolicitante.Id == filtroSolicitacao.Id &&
-                                                                        x.DataSolicitacao >= filtroSolicitacao.DataInicio &&
-                                                                        x.DataSolicitacao <= filtroSolicitacao.DataFim, c => c.EmpresaSolicitante).ToList();
+                                                                        x.DataSolicitacao.Value.Date >= filtroSolicitacao.DataInicio.Date &&
+                                                                        x.DataSolicitacao.Value.Date <= filtroSolicitacao.DataFim.Date, c => c.EmpresaSolicitante).ToList();
 
 
             var solicitacaoCompleta = _repositorySolicitacao.ListarOrcamentoReferenteSolicitacao(solicitacaoCollection);

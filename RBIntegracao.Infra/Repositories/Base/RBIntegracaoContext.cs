@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 using prmToolkit.NotificationPattern;
 using RBIntegracao.Domain.Entities;
 using RBIntegracao.Infra.Repositories.Map;
@@ -19,12 +21,15 @@ namespace RBIntegracao.Infra.Repositories.Base
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseMySql("Server=localhost;Database=RBIntegracao;Uid=root;Pwd=root;");
+                
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Ignore<TableNameFromDbSetConvention>();
 
             //ignorar classes
             modelBuilder.Ignore<Notification>();
@@ -37,7 +42,7 @@ namespace RBIntegracao.Infra.Repositories.Base
             modelBuilder.ApplyConfiguration(new MapOrcamento());
             modelBuilder.ApplyConfiguration(new MapOrcamentoItem());
             modelBuilder.ApplyConfiguration(new MapSolicitacaoOrcamento());
-
+           
             base.OnModelCreating(modelBuilder);
         }
     }

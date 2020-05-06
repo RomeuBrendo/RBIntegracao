@@ -27,8 +27,6 @@ namespace RBIntegracao.Infra.Repositories.Map
                 .WithMany()
                 .HasForeignKey("IdUsuario");
 
-            
-
         }
     }
 }

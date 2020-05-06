@@ -40,6 +40,7 @@ namespace RBIntegracao.Domain.Entities
         public double Quantidade { get;  private set; }
         public double ValorUnitarioItem { get; private set; }
         public double ValorTotalItem { get; private set; }
+        public Guid? OrcamentoId { get; private set; }
 
     }
 }

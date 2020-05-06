@@ -113,5 +113,18 @@ namespace RBIntegracao.Domain.Services
             return new AlterarStatusResponse(orcamento.IdExterno, "Status alterado com sucesso");
 
         }
+
+        public AlterarStatusResponse Deletar(int idExterno, Guid idUsuario)
+        {
+
+            if(!_repositoryOrcamento.DeletarOrcamentoCompleto(idExterno, idUsuario))
+            {
+                AddNotification("IdExterno", "Orçamento não localizado.");
+                return null;
+            }
+            //Futuramente irei criar um response padrão p/ este tipo de retorno
+            return new AlterarStatusResponse(0, "Orçamento excluído com sucesso!");
+
+        }
     }
 }

@@ -32,10 +32,7 @@ namespace RBIntegracao.WebApi.Controllers.Fornecedor
         {
             try
             {
-                string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
-                AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuarioClaims);
-
-                var response = _serviceOrcamento.AdicionarOrcamento(request, usuarioResponse.Id);
+                var response = _serviceOrcamento.AdicionarOrcamento(request, RetornaIdUsuarioLogado());
 
                 return await ResponseAsync(response, _serviceOrcamento);
             }
@@ -44,6 +41,35 @@ namespace RBIntegracao.WebApi.Controllers.Fornecedor
 
                 return BadRequest(ex.Message);
             }
+
+        }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("api/Fornecedor/Orcamento/Deletar/{idExterno:int}")]
+        public async Task<IActionResult> DeletarOrcamento(int idExterno)
+        {
+            try
+            {
+
+                var result = _serviceOrcamento.Deletar(idExterno, RetornaIdUsuarioLogado());
+
+                return await ResponseAsync(result, _serviceOrcamento);
+
+            }
+            catch (System.Exception ex)
+            {
+
+                return NotFound(ex.Message);
+            }
+        }
+
+        public Guid RetornaIdUsuarioLogado()
+        {
+            string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
+            AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuarioClaims);
+
+            return usuarioResponse.Id;
 
         }
     }
