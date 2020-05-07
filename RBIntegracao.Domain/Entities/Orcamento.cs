@@ -31,6 +31,24 @@ namespace RBIntegracao.Domain.Entities
             ValidaDados();
         }
 
+        public Orcamento(Guid id, string dataInicio, string dataFim)
+        {
+            try
+            {
+                Id = id;
+                DataInicio = Convert.ToDateTime(dataInicio);
+                DataFim = Convert.ToDateTime(dataFim);
+            }
+            catch
+            {
+
+                AddNotification("Data ", "Verifique Data Inicio e Data Fim.");
+            }
+
+            if ((this.DataInicio) > (this.DataFim))
+                AddNotification("Data ", "Data inicio não pode ser superior a data fim.");
+        }
+
         public void AlterarStatus(EnumStatus status)
         {
             Status = status;
@@ -46,6 +64,10 @@ namespace RBIntegracao.Domain.Entities
         public int Parcelas { get; private set; }
         public List<OrcamentoItem> Itens { get; private set; }
         public DateTime DataOrcamento { get; private set; }
+
+        //Propriedade apenas para validar data da listagem
+        public DateTime DataInicio { get; private set; }
+        public DateTime DataFim { get; private set; }
 
         private void ValidaDados()
         {

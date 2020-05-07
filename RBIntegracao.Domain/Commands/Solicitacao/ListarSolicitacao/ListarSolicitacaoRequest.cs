@@ -1,12 +1,11 @@
 ﻿using MediatR;
+using RBIntegracao.Domain.Commands.Base;
 using System;
 
 namespace RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao
 {
-    public class ListarSolicitacaoRequest 
+    public class ListarSolicitacaoRequest : ListarFiltroBaseRequest
     {
-        public Guid? Id { get; set; }
-        public string DataInicio { get; set; }
-        public string DataFim { get; set; }
+
     }
 }

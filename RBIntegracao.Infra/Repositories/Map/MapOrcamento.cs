@@ -21,6 +21,10 @@ namespace RBIntegracao.Infra.Repositories.Map
             builder.Property(x => x.FormaPagamento).HasMaxLength(50);
             builder.Property(x => x.Parcelas);
 
+            //Apenas p/ relatorio
+            builder.Ignore(x => x.DataInicio);
+            builder.Ignore(x => x.DataFim);
+
 
             builder
                 .HasOne(x => x.FornecedorSolicitante)

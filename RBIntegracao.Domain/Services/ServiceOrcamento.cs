@@ -1,5 +1,6 @@
 ﻿using prmToolkit.NotificationPattern;
 using RBIntegracao.Domain.Commands.Orcamento;
+using RBIntegracao.Domain.Commands.Orcamento.ListarOrcamento;
 using RBIntegracao.Domain.Entities;
 using RBIntegracao.Domain.Interfaces.Repositories;
 using RBIntegracao.Domain.Interfaces.Services;
@@ -125,6 +126,36 @@ namespace RBIntegracao.Domain.Services
             //Futuramente irei criar um response padrão p/ este tipo de retorno
             return new AlterarStatusResponse(0, "Orçamento excluído com sucesso!");
 
+        }
+
+        public List<OrcamentoResponse> ListarOrcamentoPorData(ListarOrcamentoRequest request)
+        {
+            if (request == null)
+            {
+                AddNotification("Request", "Inválido");
+                return null;
+            }
+
+            if (_repositoryUsuario.Existe(x => x.Id == request.Id && x.ClienteOuFornecedor == Enums.EnumClienteOuFornecedor.Cliente))
+            {
+                AddNotification("Usuario", "Função dísponivel apenas para Fornecedor");
+                return null;
+            }
+
+            var filtro = new Orcamento(request.Id.Value, request.DataInicio, request.DataFim);
+
+            AddNotifications(filtro);
+
+            if (IsInvalid()) return null;
+
+            var orcamentos = _repositoryOrcamento.ListarPor(x => x.FornecedorSolicitante.Id == filtro.Id &&
+                                                            x.DataOrcamento.Date >= filtro.DataInicio.Date &&
+                                                            x.DataOrcamento.Date <= filtro.DataFim.Date, c => c.FornecedorSolicitante, i => i.Itens);
+
+
+            var response = orcamentos.ToList().Select(entidade => (OrcamentoResponse)entidade).ToList();
+
+            return response;
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RBIntegracao.Domain.Commands.Orcamento;
+using RBIntegracao.Domain.Commands.Orcamento.ListarOrcamento;
 using RBIntegracao.Domain.Commands.Usuario.AutenticarUsuario;
 using RBIntegracao.Domain.Interfaces.Services;
 using RBIntegracao.Infra.Repositories.Transactions;
@@ -64,6 +65,27 @@ namespace RBIntegracao.WebApi.Controllers.Fornecedor
             }
         }
 
+        [Authorize]
+        [HttpGet]
+        [Route("api/Fornecedor/Orcamento/ListarPorData")]
+        public async Task<IActionResult> ListarSolicitacao(ListarOrcamentoRequest request)
+        {
+            try
+            {
+
+                request.Id = RetornaIdUsuarioLogado();
+
+                var response = _serviceOrcamento.ListarOrcamentoPorData(request);
+
+                return await ResponseAsync(response, _serviceOrcamento);
+            }
+            catch (System.Exception ex)
+            {
+
+                return await ResponseExceptionAsync(ex);
+            }
+
+        }
         public Guid RetornaIdUsuarioLogado()
         {
             string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
