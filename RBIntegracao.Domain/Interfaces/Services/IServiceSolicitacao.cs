@@ -12,7 +12,7 @@ namespace RBIntegracao.Domain.Interfaces.Services
     public interface IServiceSolicitacao : IServiceBase
     {
         AdicionarSolicitacaoResponse AdicionarSolicitacao(AdicionarSolicitacaoRequest request, Guid idUsuario);
-        IEnumerable<ListarSolicitacaoSemOrcamentoResponse> ListarSolicitacaoFornecedor(Guid IdFornecedor);
+        IEnumerable<ListarSolicitacaoSemOrcamentoResponse> ListarSolicitacaoFornecedor(Guid IdFornecedor, int status);
         public IEnumerable<ListarSolicitacaoResponse> ListarSolicitacaoCliente(ListarSolicitacaoRequest listarSolicitacaoRequest);
         public AlterarStatusSolicitacaoResponse AlterarStatus(AlterarStatusSolicitacaoRequest request, Guid idUsuario);
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RBIntegracao.Domain.Entities;
+using RBIntegracao.Domain.Enums;
 using RBIntegracao.Domain.Interfaces.Repositories;
 using RBIntegracao.Infra.Repositories.Base;
 using System;
@@ -17,16 +18,18 @@ namespace RBIntegracao.Infra.Repositories
             _context = context;
         }
 
-        public IEnumerable<Solicitacao> ListarSolicitacaoFornecedor(Guid idFornecedor)
+        public IEnumerable<Solicitacao> ListarSolicitacaoFornecedor(Guid idFornecedor, EnumStatus status)
         {
        
-
-            IEnumerable<Solicitacao> solicitacoes = (from f in _context.GrupoFornecedor
+            var solicitacoes = (from f in _context.GrupoFornecedor
                                     from s in _context.Solicitacao
                                     where f.Fornecedor.Id == idFornecedor &&
-                                    s.Id == f.Solicitacao.Id
+                                    s.Id == f.Solicitacao.Id 
                                     select s).Include(c => c.EmpresaSolicitante).ToList();
-            
+
+            if (status != EnumStatus.Todos)
+                solicitacoes.RemoveAll(x => x.Status != status);
+
             return solicitacoes;
         }
 

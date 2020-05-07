@@ -4,6 +4,7 @@ using RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao;
 using RBIntegracao.Domain.Commands.Solicitacao.AlterarStatus;
 using RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao;
 using RBIntegracao.Domain.Entities;
+using RBIntegracao.Domain.Enums;
 using RBIntegracao.Domain.Interfaces.Repositories;
 using RBIntegracao.Domain.Interfaces.Services;
 using System;
@@ -105,10 +106,17 @@ namespace RBIntegracao.Domain.Services
             return new AdicionarSolicitacaoResponse(solicitacao.Id, request.IdExternoSolicitacao);
 
         }
-        public IEnumerable<ListarSolicitacaoSemOrcamentoResponse> ListarSolicitacaoFornecedor(Guid IdUsuario)
+        public IEnumerable<ListarSolicitacaoSemOrcamentoResponse> ListarSolicitacaoFornecedor(Guid IdUsuario, int status)
         {
+            if (status < 0 || status > 4)
+            {
+                AddNotification("Status", "Inválido");
+                return null;
+            }
 
-            var solicitacaoCollection = _repositorySolicitacao.ListarSolicitacaoFornecedor(IdUsuario);
+            var statusEnum = (EnumStatus)status; 
+
+            var solicitacaoCollection = _repositorySolicitacao.ListarSolicitacaoFornecedor(IdUsuario, statusEnum);
          
             var response = solicitacaoCollection.ToList().Select(entidade => (ListarSolicitacaoSemOrcamentoResponse)entidade);
            

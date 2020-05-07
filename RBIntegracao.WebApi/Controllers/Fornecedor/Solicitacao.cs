@@ -24,15 +24,15 @@ namespace RBIntegracao.WebApi.Controllers.Fornecedor
 
         [Authorize]
         [HttpGet]
-        [Route("api/Fornecedor/Solicitacao/Listar")]
-        public async Task<IActionResult> ListarSolicitacao()
+        [Route("api/Fornecedor/Solicitacao/ListarPorStatus/{status:int}")]
+        public async Task<IActionResult> ListarSolicitacao(int status)
         {
             try
             {
                 string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
                 AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuarioClaims);
 
-                var response = _serviceSolicitacao.ListarSolicitacaoFornecedor(usuarioResponse.Id);
+                var response = _serviceSolicitacao.ListarSolicitacaoFornecedor(usuarioResponse.Id, status);
 
                 return await ResponseAsync(response, _serviceSolicitacao);
             }
