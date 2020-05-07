@@ -51,7 +51,10 @@ namespace RBIntegracao.Domain.Entities
                 AddNotification("Data ", "Data inicio não pode ser superior a data fim.");
 
         }
-
+        public void AlterarStatus(EnumStatus status)
+        {
+            Status = status;
+        }
         public Usuario EmpresaSolicitante { get; private set; }
 
         public int IdExternoSolicitacao { get; private set; }

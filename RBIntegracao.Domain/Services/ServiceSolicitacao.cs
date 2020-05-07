@@ -1,5 +1,7 @@
 ﻿using prmToolkit.NotificationPattern;
+using RBIntegracao.Domain.Commands.Orcamento;
 using RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao;
+using RBIntegracao.Domain.Commands.Solicitacao.AlterarStatus;
 using RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao;
 using RBIntegracao.Domain.Entities;
 using RBIntegracao.Domain.Interfaces.Repositories;
@@ -145,6 +147,30 @@ namespace RBIntegracao.Domain.Services
             return response;
         }
 
+        public AlterarStatusSolicitacaoResponse AlterarStatus(AlterarStatusSolicitacaoRequest request, Guid idUsuario)
+        {
 
+            if (request == null)
+            {
+                AddNotification("Resquest", "Invalido");
+                return null;
+            }
+
+            var solicitacao = _repositorySolicitacao.ObterPor(x => x.IdExternoSolicitacao == request.IdExterno &&
+                                                                   x.EmpresaSolicitante.Id == idUsuario, c => c.EmpresaSolicitante);
+
+            if (solicitacao == null)
+            {
+                AddNotification("IdExterno", "solicitacao não localizado.");
+                return null;
+            }
+
+            solicitacao.AlterarStatus(request.NovoStatus);
+
+            solicitacao = _repositorySolicitacao.Editar(solicitacao);
+
+            return new AlterarStatusSolicitacaoResponse(solicitacao.IdExternoSolicitacao, "Status alterado com sucesso");
+
+        }
     }
 }

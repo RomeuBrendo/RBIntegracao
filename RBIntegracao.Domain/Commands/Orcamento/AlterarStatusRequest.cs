@@ -1,13 +1,8 @@
-﻿using RBIntegracao.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RBIntegracao.Domain.Commands.Base;
 
 namespace RBIntegracao.Domain.Commands.Orcamento
 {
-    public class AlterarStatusRequest
+    public class AlterarStatusRequest : AlterarStatusBaseRequest
     {
-        public int IdExterno { get; set; }
-        public EnumStatus NovoStatus { get; set; }
     }
 }

@@ -42,8 +42,6 @@ namespace RBIntegracao.WebApi.Controllers.Cliente
                 return BadRequest(ex.Message);
             }
 
-
-
         }
     }
 }

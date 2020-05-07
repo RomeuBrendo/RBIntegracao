@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RBIntegracao.Domain.Commands.Solicitacao.AdicionarSolicitacao;
+using RBIntegracao.Domain.Commands.Solicitacao.AlterarStatus;
 using RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao;
 using RBIntegracao.Domain.Commands.Usuario.AutenticarUsuario;
 using RBIntegracao.Domain.Interfaces.Services;
@@ -66,6 +67,28 @@ namespace RBIntegracao.WebApi.Controllers.Cliente
             {
 
                 return await ResponseExceptionAsync(ex);
+            }
+
+        }
+
+        [Authorize]
+        [HttpPut]
+        [Route("api/Cliente/Solicitacao/AlterarStatus")]
+        public async Task<IActionResult> AlterarGrupo([FromBody]AlterarStatusSolicitacaoRequest request)
+        {
+            try
+            {
+                string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
+                AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuarioClaims);
+
+                var response = _serviceSolicitacao.AlterarStatus(request, usuarioResponse.Id);
+
+                return await ResponseAsync(response, _serviceSolicitacao);
+            }
+            catch (System.Exception ex)
+            {
+
+                return BadRequest(ex.Message);
             }
 
         }
