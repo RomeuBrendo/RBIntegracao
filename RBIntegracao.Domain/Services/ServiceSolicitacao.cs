@@ -103,12 +103,12 @@ namespace RBIntegracao.Domain.Services
             return new AdicionarSolicitacaoResponse(solicitacao.Id, request.IdExternoSolicitacao);
 
         }
-        public IEnumerable<ListarSolicitacaoResponse> ListarSolicitacaoFornecedor(Guid IdUsuario)
+        public IEnumerable<ListarSolicitacaoSemOrcamentoResponse> ListarSolicitacaoFornecedor(Guid IdUsuario)
         {
 
-            IEnumerable<Solicitacao> solicitacaoCollection = _repositorySolicitacao.ListarSolicitacaoFornecedor(IdUsuario);
-
-            var response = solicitacaoCollection.ToList().Select(entidade => (ListarSolicitacaoResponse)entidade);
+            var solicitacaoCollection = _repositorySolicitacao.ListarSolicitacaoFornecedor(IdUsuario);
+         
+            var response = solicitacaoCollection.ToList().Select(entidade => (ListarSolicitacaoSemOrcamentoResponse)entidade);
            
             return response;
         }
@@ -140,7 +140,7 @@ namespace RBIntegracao.Domain.Services
 
             var solicitacaoCompleta = _repositorySolicitacao.ListarOrcamentoReferenteSolicitacao(solicitacaoCollection);
 
-            var response = solicitacaoCompleta.ToList().Select(entidade => (ListarSolicitacaoResponse)entidade);
+            var response = solicitacaoCompleta.ToList().Select(entidade => (ListarSolicitacaoResponse)entidade).ToList();
          
             return response;
         }

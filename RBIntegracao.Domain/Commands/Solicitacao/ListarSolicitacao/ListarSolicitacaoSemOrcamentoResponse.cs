@@ -1,12 +1,10 @@
-﻿using RBIntegracao.Domain.Commands.Orcamento;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao
 {
-    public class ListarSolicitacaoResponse
+    public class ListarSolicitacaoSemOrcamentoResponse
     {
         public int IdExternoSolicitacao { get; set; }
         public String EmpresaSolicitante { get; set; }
@@ -28,14 +26,10 @@ namespace RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao
 
         public DateTime DataValidadeSolicitacao { get; private set; }
 
-        public List<OrcamentoResponse>? OrcamentoJaRecebido { get; set; }
-
-        public static explicit operator ListarSolicitacaoResponse(Entities.Solicitacao entidade)
+        public static explicit operator ListarSolicitacaoSemOrcamentoResponse(Entities.Solicitacao entidade)
         {
-
-            return new ListarSolicitacaoResponse()
+            return new ListarSolicitacaoSemOrcamentoResponse()
             {
-
                 IdExternoSolicitacao = entidade.IdExternoSolicitacao,
                 EmpresaSolicitanteCNPJCPF = entidade.EmpresaSolicitante.CnpjCpf,
                 EmpresaSolicitante = entidade.EmpresaSolicitante.Nome.RazaoSocial,
@@ -47,11 +41,7 @@ namespace RBIntegracao.Domain.Commands.Solicitacao.ListarSolicitacao
                 Observacao = entidade.Observacao,
                 DataSolicitacao = entidade.DataSolicitacao,
                 DataValidadeSolicitacao = entidade.DataValidade,
-
-                OrcamentoJaRecebido = entidade.Orcamentos.ToList().Select(entidade => (OrcamentoResponse)entidade).ToList(),
-
-        };
+            };
         }
-
     }
 }

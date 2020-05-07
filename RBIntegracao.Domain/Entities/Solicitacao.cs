@@ -75,7 +75,7 @@ namespace RBIntegracao.Domain.Entities
 
         public DateTime DataValidade { get; private set; }
 
-        public List<Orcamento> Orcamentos { get; set; }
+        public List<Orcamento>? Orcamentos { get; set; }
 
         private void ValidaNumerais()
         {
