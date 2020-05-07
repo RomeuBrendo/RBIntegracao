@@ -16,5 +16,9 @@ namespace RBIntegracao.Domain.Interfaces.Services
         AlterarStatusResponse Deletar(int idExterno, Guid idUsuario);
 
         public List<OrcamentoResponse> ListarOrcamentoPorData(ListarOrcamentoRequest request);
+
+        public OrcamentoResponse ListarPorIdExterno(int idExterno, Guid idUsuario);
+
+
     }
 }

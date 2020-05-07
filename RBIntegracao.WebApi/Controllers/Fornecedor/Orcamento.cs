@@ -86,6 +86,25 @@ namespace RBIntegracao.WebApi.Controllers.Fornecedor
             }
 
         }
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/Fornecedor/Orcamento/ListarPorIdExterno/{idExterno:int}")]
+        public async Task<IActionResult> ListarSolicitacaoPorIdExterno(int idExterno)
+        {
+            try
+            {
+                var response = _serviceOrcamento.ListarPorIdExterno(idExterno, RetornaIdUsuarioLogado());
+
+                return await ResponseAsync(response, _serviceOrcamento);
+            }
+            catch (System.Exception ex)
+            {
+
+                return await ResponseExceptionAsync(ex);
+            }
+
+        }
         public Guid RetornaIdUsuarioLogado()
         {
             string usuarioClaims = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;

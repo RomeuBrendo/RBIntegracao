@@ -157,5 +157,21 @@ namespace RBIntegracao.Domain.Services
 
             return response;
         }
+
+        public OrcamentoResponse ListarPorIdExterno(int idExterno, Guid idUsuario)
+        {
+            var orcamento = _repositoryOrcamento.ObterPor(x => x.IdExterno.Equals(idExterno) && 
+                                                               x.FornecedorSolicitante.Id == idUsuario, 
+                                                               c => c.FornecedorSolicitante,
+                                                               i => i.Itens);
+
+            if (orcamento == null)
+            {
+                AddNotification("IdExterno", "Orcamento não encontrado");
+                return null;
+            }
+
+            return (OrcamentoResponse)orcamento;
+        }
     }
 }
