@@ -16,15 +16,16 @@ namespace RBIntegracao.Infra.Repositories.Base
         public DbSet<OrcamentoItem> OrcamentoItem { get; set; }
         public DbSet<SolicitacaoOrcamento> SolicitacaoOrcamento { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseMySql("Server=localhost;Database=RBIntegracao;Uid=root;Pwd=root;");
-                
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseMySql("Server=localhost;Database=RBIntegracao;Uid=root;Pwd=root;");
 
+        //    }
+        //}
+
+        public RBIntegracaoContext(DbContextOptions<RBIntegracaoContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
