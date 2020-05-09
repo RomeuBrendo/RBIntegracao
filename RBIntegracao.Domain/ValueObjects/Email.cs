@@ -13,7 +13,7 @@ namespace RBIntegracao.Domain.ValueObjects
             Endereco = endereco;
 
             new AddNotifications<Email>(this)
-                .IfNotEmail(x => x.Endereco);
+                .IfNotEmail(x => x.Endereco, "Email Inválido");
         }
 
         public string Endereco { get; private set; }

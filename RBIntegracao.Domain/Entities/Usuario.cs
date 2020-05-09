@@ -33,7 +33,7 @@ namespace RBIntegracao.Domain.Entities
             ValidaCpfCnpj();
 
             new AddNotifications<Usuario>(this)
-                .IfEnumInvalid(x => x.ClienteOuFornecedor, "Opção só pode ser preenchida com numerais, 0 - cliente | 1 - Fornecesor | 2 - Ambos");
+                .IfEnumInvalid(x => x.ClienteOuFornecedor, "Opção só pode ser preenchida com numerais, 0 - cliente | 1 - Fornecedor | 2 - Ambos");
                 
 
             //AddNotifications(nome, email);
