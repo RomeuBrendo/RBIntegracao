@@ -133,7 +133,7 @@ namespace RBIntegracao.Domain.Services
 
             if (_repositoryUsuario.Existe(x => x.Id == request.Id && x.ClienteOuFornecedor == Enums.EnumClienteOuFornecedor.Fornecedor))
             {
-                AddNotification("ListarSolicitacaoCliente", "Funcionalidade disponivel apenas p/ Cliente");
+                AddNotification("Listar SolicitacaoCliente", "Funcionalidade disponivel apenas p/ Cliente");
                 return null;
             }
       
