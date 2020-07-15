@@ -150,7 +150,6 @@ namespace RBIntegracao.WebApi
                         Contact = new OpenApiContact
                         {
                             Name = "Romeu Brendo"
-                            //Url = new Uri("https://github.com/renatogroffe")
                         }
                     });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

@@ -5,6 +5,7 @@ using RBIntegracao.Domain.Entities;
 using RBIntegracao.Domain.Interfaces.Repositories;
 using RBIntegracao.Domain.Interfaces.Services;
 using RBIntegracao.Domain.ValueObjects;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RBIntegracao.Domain.Services
 {
@@ -31,6 +32,12 @@ namespace RBIntegracao.Domain.Services
 
             Entities.Usuario usuario = new Entities.Usuario(nome, email, request.Senha, request.CnpjCpf, request.ClienteOuFornecedor);
             AddNotifications(usuario, nome, email);
+
+            if (_repositoryUsuario.Existe(x => x.CnpjCpf == usuario.CnpjCpf))
+                AddNotification("CnpjCpf", "Já cadastrado");
+
+            if (_repositoryUsuario.Existe(x => x.Email.Endereco == usuario.Email.Endereco))
+                AddNotification("Email", "Já cadastrado");
 
             if (this.IsInvalid()) return null;
 

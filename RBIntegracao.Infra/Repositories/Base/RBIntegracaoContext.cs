@@ -32,7 +32,6 @@ namespace RBIntegracao.Infra.Repositories.Base
 
             modelBuilder.Ignore<TableNameFromDbSetConvention>();
 
-            //ignorar classes
             modelBuilder.Ignore<Notification>();
            
 
