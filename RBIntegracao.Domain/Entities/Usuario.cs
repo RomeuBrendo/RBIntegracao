@@ -60,12 +60,12 @@ namespace RBIntegracao.Domain.Entities
             if (this.CnpjCpf.Length != 11)
             {
                 new AddNotifications<Usuario>(this)
-                    .IfNotCnpj(x => x.CnpjCpf);
+                    .IfNotCpf(x => x.CnpjCpf, "CPF Inválido");
             }
             else 
             {
                 new AddNotifications<Usuario>(this)
-                    .IfNotCpf(x => x.CnpjCpf);
+                    .IfNotCnpj(x => x.CnpjCpf, "CNPJ Inválido");
             }
 
                
